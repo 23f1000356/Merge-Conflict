@@ -9,19 +9,21 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    role: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password || !formData.role) {
-      toast.error('Please fill all fields');
+    if (!formData.email || !formData.password) {
+      toast.error('Please fill in email and password');
       return;
     }
 
     try {
-      const response = await authService.login(formData);
+      const response = await authService.login({
+        email: formData.email,
+        password: formData.password
+      });
       const { token, user } = response.data;
 
       localStorage.setItem('token', token);
@@ -36,10 +38,13 @@ export default function Login() {
           navigate('/dashboard/doctor');
         } else if (user.role === 'admin') {
           navigate('/dashboard/admin');
+        } else {
+          navigate('/dashboard/patient'); // fallback
         }
       }, 1000);
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login failed');
+      const errorMsg = error.response?.data?.message || 'Login failed. Please check your credentials.';
+      toast.error(errorMsg);
     }
   };
 
@@ -87,24 +92,6 @@ export default function Login() {
                 placeholder="Enter your password"
                 required
               />
-            </div>
-
-            <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
-                Login As
-              </label>
-              <select
-                id="role"
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
-                required
-              >
-                <option value="">Select your role</option>
-                <option value="patient">Patient</option>
-                <option value="doctor">Doctor</option>
-                <option value="admin">Admin</option>
-              </select>
             </div>
 
             <div className="text-right">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import Sidebar from '../components/Sidebar';
+import BookAppointment from '../components/BookAppointment';
 import {
   Menu,
   Calendar,
@@ -742,73 +743,108 @@ export default function PatientDashboard() {
           </div>
         </div>
 
-        {/* History Section */}
-        <div className="mt-8 bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Test History</h2>
-            <Link to="/reports" className="text-cyan-600 hover:text-cyan-700 font-medium text-sm">
-              See All →
-            </Link>
+        {/* Tests and Appointments Tabs Section */}
+        <div className="mt-8 bg-white rounded-xl shadow-md overflow-hidden">
+          {/* Tab Navigation */}
+          <div className="flex border-b border-gray-200">
+            <button
+              onClick={() => setActiveTab('tests')}
+              className={`flex-1 px-6 py-4 font-semibold transition-colors flex items-center justify-center gap-2 ${
+                activeTab === 'tests'
+                  ? 'text-cyan-600 border-b-2 border-cyan-600 bg-cyan-50'
+                  : 'text-gray-600 hover:text-gray-800'
+              }`}
+            >
+              <FileText className="w-4 h-4" />
+              Recent Tests
+            </button>
+            <button
+              onClick={() => setActiveTab('appointments')}
+              className={`flex-1 px-6 py-4 font-semibold transition-colors flex items-center justify-center gap-2 ${
+                activeTab === 'appointments'
+                  ? 'text-cyan-600 border-b-2 border-cyan-600 bg-cyan-50'
+                  : 'text-gray-600 hover:text-gray-800'
+              }`}
+            >
+              <Calendar className="w-4 h-4" />
+              Book Appointment
+            </button>
           </div>
 
-          {recentTests.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-gray-600 font-semibold">Date</th>
-                    <th className="text-left py-3 px-4 text-gray-600 font-semibold">Score</th>
-                    <th className="text-left py-3 px-4 text-gray-600 font-semibold">Brain Age</th>
-                    <th className="text-left py-3 px-4 text-gray-600 font-semibold">Risk Level</th>
-                    <th className="text-left py-3 px-4 text-gray-600 font-semibold">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentTests.map((test) => (
-                    <tr key={test.id} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4">
-                        <span className="font-medium text-gray-900">
-                          {new Date(test.createdAt).toLocaleDateString()}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="font-semibold text-gray-900">{Math.round(test.cognitiveIndex)}%</span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="text-gray-700">{Math.round(test.brainAge)} yrs</span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span
-                          className={`px-2 py-1 rounded text-xs font-semibold ${
-                            test.riskProbability < 30
-                              ? 'bg-green-100 text-green-700'
-                              : test.riskProbability < 60
-                              ? 'bg-yellow-100 text-yellow-700'
-                              : 'bg-red-100 text-red-700'
-                          }`}
-                        >
-                          {test.riskLevel || 'Low'}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <Link
-                          to="/test/results"
-                          state={{ testData: test }}
-                          className="text-cyan-600 hover:text-cyan-700 font-medium"
-                        >
-                          View
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="text-center py-8 text-gray-500">
-              <p>No tests yet. Take your first test to get started!</p>
-            </div>
-          )}
+          {/* Tab Content */}
+          <div className="p-6">
+            {activeTab === 'tests' ? (
+              <>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold text-gray-900">Test History</h2>
+                  <Link to="/reports" className="text-cyan-600 hover:text-cyan-700 font-medium text-sm">
+                    See All →
+                  </Link>
+                </div>
+
+                {recentTests.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200">
+                          <th className="text-left py-3 px-4 text-gray-600 font-semibold">Date</th>
+                          <th className="text-left py-3 px-4 text-gray-600 font-semibold">Score</th>
+                          <th className="text-left py-3 px-4 text-gray-600 font-semibold">Brain Age</th>
+                          <th className="text-left py-3 px-4 text-gray-600 font-semibold">Risk Level</th>
+                          <th className="text-left py-3 px-4 text-gray-600 font-semibold">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {recentTests.map((test) => (
+                          <tr key={test.id} className="border-b border-gray-100 hover:bg-gray-50">
+                            <td className="py-3 px-4">
+                              <span className="font-medium text-gray-900">
+                                {new Date(test.createdAt).toLocaleDateString()}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4">
+                              <span className="font-semibold text-gray-900">{Math.round(test.cognitiveIndex)}%</span>
+                            </td>
+                            <td className="py-3 px-4">
+                              <span className="text-gray-700">{Math.round(test.brainAge)} yrs</span>
+                            </td>
+                            <td className="py-3 px-4">
+                              <span
+                                className={`px-2 py-1 rounded text-xs font-semibold ${
+                                  test.riskProbability < 30
+                                    ? 'bg-green-100 text-green-700'
+                                    : test.riskProbability < 60
+                                    ? 'bg-yellow-100 text-yellow-700'
+                                    : 'bg-red-100 text-red-700'
+                                }`}
+                              >
+                                {test.riskLevel || 'Low'}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4">
+                              <Link
+                                to="/test/results"
+                                state={{ testData: test }}
+                                className="text-cyan-600 hover:text-cyan-700 font-medium"
+                              >
+                                View
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <p>No tests yet. Take your first test to get started!</p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <BookAppointment />
+            )}
+          </div>
         </div>
       </main>
     </div>

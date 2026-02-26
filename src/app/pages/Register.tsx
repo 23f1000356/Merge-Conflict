@@ -6,7 +6,7 @@ import { authService } from '../services/api';
 export default function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
     phone: '',
     age: '',
@@ -14,6 +14,7 @@ export default function Register() {
     confirmPassword: '',
     gender: '',
     role: '',
+    specialty: '',
     consent: false,
   });
 
@@ -23,6 +24,11 @@ export default function Register() {
     // Validation
     if (!formData.fullName || !formData.email || !formData.password || !formData.age || !formData.gender || !formData.role) {
       toast.error('Please fill all required fields');
+      return;
+    }
+
+    if (formData.role === 'doctor' && !formData.specialty) {
+      toast.error('Please select your medical specialty');
       return;
     }
 
@@ -209,6 +215,29 @@ export default function Register() {
                 <option value="doctor">Doctor</option>
               </select>
             </div>
+
+            {formData.role === 'doctor' && (
+              <div>
+                <label htmlFor="specialty" className="block text-sm font-medium text-gray-700 mb-1">
+                  Medical Specialty *
+                </label>
+                <select
+                  id="specialty"
+                  value={formData.specialty}
+                  onChange={(e) => setFormData({ ...formData, specialty: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  required
+                >
+                  <option value="">Select your specialty</option>
+                  <option value="Neurology">Neurology</option>
+                  <option value="Geriatrics">Geriatrics</option>
+                  <option value="Psychiatry">Psychiatry</option>
+                  <option value="Internal Medicine">Internal Medicine</option>
+                  <option value="General Practice">General Practice</option>
+                  <option value="Cardiology">Cardiology</option>
+                </select>
+              </div>
+            )}
 
             <div className="flex items-start gap-2 mt-4">
               <input

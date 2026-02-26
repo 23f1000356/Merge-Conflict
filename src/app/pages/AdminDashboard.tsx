@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import Sidebar from '../components/Sidebar';
-import { Menu, LogOut, Users, TrendingUp, Activity, BarChart3, Download, FileText } from 'lucide-react';
+import { Menu, LogOut, Users, TrendingUp, Activity, BarChart3, Download, AlertCircle, Database, Shield, Settings, Zap } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, LineChart, Line } from 'recharts';
 import { userService, testService } from '../services/api';
 import { toast } from 'sonner';
@@ -32,6 +32,9 @@ export default function AdminDashboard() {
 
   // Calculate stats from real data
   const totalUsers = users.length;
+  const activeUsers = users.filter(u => u.status === 'active').length;
+  const highRiskCount = testHistory.filter(t => (t.riskProbability || 0) >= 60).length;
+  const aiAccuracy = 94.5; // Mock AI accuracy
   const patientsCount = users.filter(u => u.role === 'patient').length;
   const doctorsCount = users.filter(u => u.role === 'doctor').length;
   const adminCount = users.filter(u => u.role === 'admin').length;

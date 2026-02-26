@@ -9,11 +9,26 @@ import TestResults from './pages/TestResults';
 import Progress from './pages/Progress';
 import Profile from './pages/Profile';
 import DoctorDashboard from './pages/DoctorDashboard';
+import DoctorDashboardEnhanced from './pages/DoctorDashboardEnhanced';
+import DoctorPatients from './pages/DoctorPatients';
+import DoctorAppointments from './pages/DoctorAppointments';
+import DoctorHistory from './pages/DoctorHistory';
+import DoctorReports from './pages/DoctorReports';
+import DoctorAlerts from './pages/DoctorAlerts';
+import DoctorSettings from './pages/DoctorSettings';
 import PatientDetail from './pages/PatientDetail';
 import Reports from './pages/Reports';
 import AdminDashboard from './pages/AdminDashboard';
-import SystemHealth from './pages/SystemHealth';
-import UserManagement from './pages/UserManagement';
+import AdminUsers from './pages/AdminUsers';
+import AdminDoctors from './pages/AdminDoctors';
+import AdminAIModel from './pages/AdminAIModel';
+import AdminRiskAnalytics from './pages/AdminRiskAnalytics';
+import AdminAppointments from './pages/AdminAppointments';
+import AdminReports from './pages/AdminReports';
+import AdminSystemHealth from './pages/AdminSystemHealth';
+import AdminSecurity from './pages/AdminSecurity';
+import AdminSettings from './pages/AdminSettings';
+import AdminDoctorDetail from './pages/AdminDoctorDetail';
 import Appointments from './pages/Appointments';
 import DocDocuments from './pages/DocDocuments';
 import History from './pages/History';
@@ -64,7 +79,35 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard/doctor',
-    Component: DoctorDashboard,
+    Component: DoctorDashboardEnhanced,
+  },
+  {
+    path: '/dashboard/doctor/patients',
+    Component: DoctorPatients,
+  },
+  {
+    path: '/dashboard/doctor/appointments',
+    Component: DoctorAppointments,
+  },
+  {
+    path: '/dashboard/doctor/history',
+    Component: DoctorHistory,
+  },
+  {
+    path: '/dashboard/doctor/reports',
+    Component: DoctorReports,
+  },
+  {
+    path: '/dashboard/doctor/alerts',
+    Component: DoctorAlerts,
+  },
+  {
+    path: '/dashboard/doctor/settings',
+    Component: DoctorSettings,
+  },
+  {
+    path: '/dashboard/patient/:id',
+    Component: PatientDetail,
   },
   {
     path: '/patient/:id',
@@ -77,14 +120,6 @@ export const router = createBrowserRouter([
   {
     path: '/dashboard/admin',
     Component: AdminDashboard,
-  },
-  {
-    path: '/admin/system-health',
-    Component: SystemHealth,
-  },
-  {
-    path: '/admin/users',
-    Component: UserManagement,
   },
   {
     path: '/appointments',
@@ -105,5 +140,45 @@ export const router = createBrowserRouter([
   {
     path: '/admin/patients',
     Component: AdminPatientsList,
+  },
+  {
+    path: '/admin/users',
+    Component: AdminUsers,
+  },
+  {
+    path: '/admin/doctors',
+    Component: AdminDoctors,
+  },
+  {
+    path: '/admin/ai-model',
+    Component: AdminAIModel,
+  },
+  {
+    path: '/admin/risk-analytics',
+    Component: AdminRiskAnalytics,
+  },
+  {
+    path: '/admin/appointments',
+    Component: AdminAppointments,
+  },
+  {
+    path: '/admin/reports',
+    Component: AdminReports,
+  },
+  {
+    path: '/admin/system-health',
+    Component: AdminSystemHealth,
+  },
+  {
+    path: '/admin/security',
+    Component: AdminSecurity,
+  },
+  {
+    path: '/admin/settings',
+    Component: AdminSettings,
+  },
+  {
+    path: '/doctor/:doctorId',
+    Component: AdminDoctorDetail,
   },
 ]);

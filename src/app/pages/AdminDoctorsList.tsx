@@ -131,7 +131,10 @@ export default function AdminDoctorsList() {
                   </div>
 
                   {/* Action Button */}
-                  <button className="w-full py-2 bg-cyan-600 text-white rounded-lg font-medium hover:bg-cyan-700 transition-colors">
+                  <button 
+                    onClick={() => navigate(`/doctor/${doctor.id}`)}
+                    className="w-full py-2 bg-cyan-600 text-white rounded-lg font-medium hover:bg-cyan-700 transition-colors"
+                  >
                     View Profile
                   </button>
                 </div>
