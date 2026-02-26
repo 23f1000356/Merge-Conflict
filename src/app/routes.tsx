@@ -14,11 +14,21 @@ import Reports from './pages/Reports';
 import AdminDashboard from './pages/AdminDashboard';
 import SystemHealth from './pages/SystemHealth';
 import UserManagement from './pages/UserManagement';
+import Appointments from './pages/Appointments';
+import DocDocuments from './pages/DocDocuments';
+import History from './pages/History';
+import AdminDoctorsList from './pages/AdminDoctorsList';
+import AdminPatientsList from './pages/AdminPatientsList';
+import BrainGym from './pages/BrainGym';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     Component: Home,
+  },
+  {
+    path: '/brain-gym',
+    Component: BrainGym,
   },
   {
     path: '/login',
@@ -75,5 +85,25 @@ export const router = createBrowserRouter([
   {
     path: '/admin/users',
     Component: UserManagement,
+  },
+  {
+    path: '/appointments',
+    Component: Appointments,
+  },
+  {
+    path: '/documents',
+    Component: DocDocuments,
+  },
+  {
+    path: '/history',
+    Component: History,
+  },
+  {
+    path: '/doctors-list',
+    Component: AdminDoctorsList,
+  },
+  {
+    path: '/admin/patients',
+    Component: AdminPatientsList,
   },
 ]);

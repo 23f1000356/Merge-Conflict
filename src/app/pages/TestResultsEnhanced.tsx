@@ -97,11 +97,11 @@ export default function TestResults() {
         title: '🟢 Your Cognitive Performance is Stable',
         message: 'Your cognitive performance is showing positive patterns.',
         actions: [
-          { title: '✓ Continue Weekly Monitoring', description: 'Track your cognitive health regularly to ensure stability', timeframe: '7 days' },
-          { title: '✓ Maintain Sleep Schedule', description: 'Get 7-8 hours of quality sleep every night', timeframe: 'Daily' },
-          { title: '✓ Brain Exercises', description: 'Spend 10 minutes daily on cognitive training activities', timeframe: '10 min/day' },
-          { title: '✓ Stay Active', description: 'Do 30 minutes of physical activity to boost brain health', timeframe: '30 min/day' },
-          { title: '✓ Screen Break', description: 'Take regular breaks to reduce eye strain and mental fatigue', timeframe: 'Every hour' },
+          '✓ Continue weekly monitoring',
+          '✓ Maintain 7-8 hours of sleep',
+          '✓ Brain exercises 10 min/day',
+          '✓ Physical activity 30 min/day',
+          '✓ Reduce screen fatigue',
         ],
         retestMessage: 'Retest in 7 days',
         urgency: 'normal',
@@ -111,11 +111,11 @@ export default function TestResults() {
         title: '🟡 Early Signs of Cognitive Fluctuation',
         message: 'We detected some variations in your cognitive performance. Early intervention can help.',
         actions: [
-          { title: '⚠ Memory Training', description: 'Increase memory exercises to strengthen recall abilities', timeframe: '15 min/day' },
-          { title: '⚠ Reaction Drills', description: 'Practice reaction speed exercises to improve response time', timeframe: '10 min/day' },
-          { title: '⚠ Stress Management', description: 'Practice meditation or relaxation techniques daily', timeframe: '15 min/day' },
-          { title: '⚠ Stay Hydrated', description: 'Drink 2-3 liters of water daily for better cognitive function', timeframe: 'Throughout day' },
-          { title: '⚠ Monitor Sleep', description: 'Track and maintain consistent sleep patterns', timeframe: 'Every night' },
+          '⚠ Increase memory training exercises',
+          '⚠ Practice reaction speed drills',
+          '⚠ Reduce stress and anxiety',
+          '⚠ Improve hydration intake',
+          '⚠ Monitor sleep patterns closely',
         ],
         retestMessage: 'Retest in 3-5 days',
         urgency: 'moderate',
@@ -126,11 +126,11 @@ export default function TestResults() {
         title: '🔴 Significant Cognitive Decline Detected',
         message: 'Consistent decline patterns have been detected. Professional evaluation is recommended.',
         actions: [
-          { title: '🚨 Urgent: See Doctor', description: 'Schedule immediate appointment with healthcare professional', timeframe: 'Within 24 hrs' },
-          { title: '🚨 Neurologist Consultation', description: 'Share test report with neurologist for expert evaluation', timeframe: 'Within 48 hrs' },
-          { title: '🚨 Avoid Multitasking', description: 'Focus on single tasks to reduce cognitive strain', timeframe: 'Immediately' },
-          { title: '🚨 Reduce Workload', description: 'Minimize complex mental tasks and demanding activities', timeframe: 'Immediately' },
-          { title: '🚨 Track Symptoms', description: 'Keep daily log of any cognitive or physical symptoms', timeframe: 'Every day' },
+          '🚨 Immediate doctor consultation recommended',
+          '🚨 Share report with a neurologist',
+          '🚨 Avoid multitasking',
+          '🚨 Reduce cognitive load',
+          '🚨 Track symptoms daily',
         ],
         retestMessage: 'Retest within 48 hours',
         urgency: 'high',
@@ -306,54 +306,36 @@ export default function TestResults() {
           </p>
         </div>
 
-        {/* Performance Profile - Full Width */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Performance Profile</h2>
-          <ResponsiveContainer width="100%" height={400}>
-            <RadarChart data={radarData}>
-              <PolarGrid stroke="#e5e7eb" />
-              <PolarAngleAxis dataKey="subject" stroke="#6b7280" />
-              <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#6b7280" />
-              <Radar name="Score" dataKey="A" stroke="#06b6d4" fill="#06b6d4" fillOpacity={0.6} />
-            </RadarChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Trend Graph */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Performance Trend</h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={performanceTrendData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="category" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" domain={[0, 100]} />
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                formatter={(value) => [`${value}%`, 'Score']}
-              />
-              <Bar dataKey="score" fill="#06b6d4" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-          <div className="mt-4 flex flex-wrap gap-4 justify-center">
-            {performanceTrendData.map((item, idx) => (
-              <div key={idx} className="text-center">
-                <p className="text-sm text-gray-600">{item.category}</p>
-                <p className="text-2xl font-bold text-cyan-600">{item.score}%</p>
-              </div>
-            ))}
+        {/* Score Charts */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          {/* Bar Chart */}
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Component Scores</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={performanceTrendData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="category" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" domain={[0, 100]} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                  formatter={(value) => [`${value}%`, 'Score']}
+                />
+                <Bar dataKey="score" fill="#06b6d4" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
-        </div>
 
-        {/* AI Insight Box */}
-        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-6 mb-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-            ✨ AI Insight
-          </h2>
-          <div className="space-y-3 text-gray-700">
-            <p className="text-lg">{getAIInsight()}</p>
-            <p className="pt-3 border-t border-indigo-300 text-sm text-gray-600">
-              <strong>Tip:</strong> Regular cognitive exercises and adequate sleep can improve your scores by up to 20% in 3 months.
-            </p>
+          {/* Radar Chart */}
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Performance Profile</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <RadarChart data={radarData}>
+                <PolarGrid stroke="#e5e7eb" />
+                <PolarAngleAxis dataKey="subject" stroke="#6b7280" />
+                <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#6b7280" />
+                <Radar name="Score" dataKey="A" stroke="#06b6d4" fill="#06b6d4" fillOpacity={0.6} />
+              </RadarChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -362,131 +344,100 @@ export default function TestResults() {
           <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
             🔮 3-Month Forecast
           </h2>
-          <p className="text-sm text-gray-600 mb-4">Projected cognitive improvement based on your current performance level</p>
-          <ResponsiveContainer width="100%" height={280}>
-            <LineChart data={predictionData} margin={{ top: 5, right: 30, bottom: 5, left: 0 }}>
+          <p className="text-sm text-gray-600 mb-4">Projected cognitive improvement and stability based on your current performance</p>
+          <ResponsiveContainer width="100%" height={300}>
+            <ComposedChart data={predictionData} margin={{ top: 5, right: 30, bottom: 5, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis dataKey="month" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" domain={[0, 100]} />
+              <YAxis yAxisId="left" stroke="#6b7280" domain={[0, 100]} />
+              <YAxis yAxisId="right" orientation="right" stroke="#6b7280" domain={[0, 100]} />
               <Tooltip 
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                formatter={(value, name) => {
-                  if (name === 'score') return [`${value}%`, 'Projected Score'];
-                  if (name === 'confidence') return [`${value}%`, 'Confidence'];
-                  return value;
-                }}
               />
               <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="score" 
-                stroke="#10b981" 
-                strokeWidth={3} 
-                name="Projected Score"
-                dot={{ fill: '#10b981', r: 5 }} 
-                activeDot={{ r: 7 }}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="confidence" 
-                stroke="#93c5fd" 
-                strokeWidth={2} 
-                name="Confidence Level"
-                strokeDasharray="5 5"
-                dot={{ fill: '#93c5fd', r: 4 }} 
-              />
-            </LineChart>
+              <Area yAxisId="left" type="monotone" dataKey="score" fill="#d1fae5" stroke="#10b981" strokeWidth={3} name="Projected Score" />
+              <Line yAxisId="right" type="monotone" dataKey="stability" stroke="#3b82f6" strokeWidth={2} name="Stability Index" strokeDasharray="5 5" />
+            </ComposedChart>
           </ResponsiveContainer>
           <div className="mt-6 grid md:grid-cols-3 gap-4">
             <div className="bg-green-50 rounded-lg p-4 border border-green-200">
               <p className="text-sm text-gray-600 mb-1">Expected Improvement</p>
-              <p className="text-2xl font-bold text-green-600">+{Math.min(100, overallScore + 15) - overallScore}%</p>
+              <p className="text-2xl font-bold text-green-600">+15%</p>
               <p className="text-xs text-gray-500 mt-1">Over 3 months</p>
             </div>
             <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
               <p className="text-sm text-gray-600 mb-1">Confidence Level</p>
-              <p className="text-2xl font-bold text-blue-600">85%</p>
+              <p className="text-2xl font-bold text-blue-600">95%</p>
               <p className="text-xs text-gray-500 mt-1">Based on current trends</p>
             </div>
             <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-              <p className="text-sm text-gray-600 mb-1">Projected Brain Age</p>
+              <p className="text-sm text-gray-600 mb-1">Expected Brain Age</p>
               <p className="text-2xl font-bold text-purple-600">{Math.max(18, brainAge - 2)} yrs</p>
-              <p className="text-xs text-gray-500 mt-1">From {brainAge} years</p>
+              <p className="text-xs text-gray-500 mt-1">from {brainAge} years</p>
             </div>
           </div>
+        </div>
+
+        {/* AI Insight Box */}
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-6 mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">🤖 AI Insight Analysis</h2>
+          <p className="text-gray-700 leading-relaxed">
+            {getAIInsight()}
+          </p>
         </div>
 
         {/* Risk-Based Recommendations */}
         <div className={`rounded-xl border-2 p-8 mb-8 ${getRiskBgColor()}`}>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-              {riskLevel < 30 ? '✅' : riskLevel < 60 ? '⚠️' : '🚨'} {recommendations.title}
-            </h2>
-            <span className={`px-4 py-2 rounded-full font-semibold text-white ${getRiskColor()}`}>
-              {getRiskText()}
-            </span>
-          </div>
-
-          <p className="text-gray-700 mb-6 text-lg">{recommendations.message}</p>
-
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
-            {recommendations.actions.map((action, idx) => (
-              <div key={idx} className="bg-white bg-opacity-60 rounded-lg p-4 border border-gray-300">
-                <p className="font-semibold text-gray-900 mb-2">{action.title}</p>
-                <p className="text-sm text-gray-700">{action.description}</p>
-                <p className="text-xs text-gray-500 mt-2">⏱️ {action.timeframe}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className={`rounded-lg p-4 ${riskLevel >= 60 ? 'bg-red-100 border-red-300' : 'bg-blue-100 border-blue-300'} border`}>
-            <p className="font-semibold text-gray-900 mb-1">🔄 When to Retake:</p>
-            <p className="text-gray-700 text-sm">{recommendations.retestMessage}</p>
+          <h2 className={`text-2xl font-bold mb-4 ${getRiskTextColor()}`}>{recommendations.title}</h2>
+          <p className={`mb-6 text-lg ${getRiskTextColor()}`}>{recommendations.message}</p>
+          
+          <div className="bg-white rounded-lg p-6 mb-6">
+            <h3 className="font-semibold text-gray-900 mb-4">Recommended Actions:</h3>
+            <div className="space-y-3">
+              {recommendations.actions.map((action, idx) => (
+                <p key={idx} className={`${getRiskTextColor()} font-medium`}>{action}</p>
+              ))}
+            </div>
           </div>
 
           {recommendations.extraNote && (
-            <div className="mt-4 bg-white bg-opacity-60 rounded-lg p-4 border-l-4 border-gray-400">
-              <p className="text-sm text-gray-700"><strong>💡 Additional Note:</strong> {recommendations.extraNote}</p>
+            <div className="bg-white rounded-lg p-4 mb-4 border-l-4 border-orange-400">
+              <p className="text-gray-700 font-semibold">{recommendations.extraNote}</p>
             </div>
           )}
+
+          <p className={`text-lg font-bold ${getRiskTextColor()}`}>
+            ⏰ {recommendations.retestMessage}
+          </p>
         </div>
 
         {/* Action Buttons */}
-        <div className="grid sm:grid-cols-5 gap-4">
-          <Link 
-            to="/reports"
-            className="flex flex-col items-center gap-2 p-6 bg-white border-2 border-cyan-500 text-cyan-600 rounded-xl hover:shadow-lg hover:bg-cyan-50 transition-all font-semibold"
-          >
-            <Download className="w-8 h-8" />
-            <span>Download / Export</span>
-          </Link>
-          <button 
-            onClick={() => alert('Share functionality coming soon!')}
-            className="flex flex-col items-center gap-2 p-6 bg-white border-2 border-blue-500 text-blue-600 rounded-xl hover:shadow-lg hover:bg-blue-50 transition-all font-semibold"
-          >
-            <Share2 className="w-8 h-8" />
-            <span>Share</span>
+        <div className="grid sm:grid-cols-5 gap-4 mb-8">
+          <button className="flex flex-col items-center gap-2 p-4 bg-white border-2 border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
+            <Download className="w-6 h-6 text-cyan-600" />
+            <span className="font-semibold text-gray-900 text-sm">Download PDF</span>
+          </button>
+          <button className="flex flex-col items-center gap-2 p-4 bg-white border-2 border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
+            <Share2 className="w-6 h-6 text-cyan-600" />
+            <span className="font-semibold text-gray-900 text-sm">Share Doctor</span>
+          </button>
+          <button className="flex flex-col items-center gap-2 p-4 bg-white border-2 border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
+            <Zap className="w-6 h-6 text-cyan-600" />
+            <span className="font-semibold text-gray-900 text-sm">Brain Training</span>
           </button>
           <Link
-            to="/brain-gym"
-            className="flex flex-col items-center gap-2 p-6 bg-white border-2 border-purple-500 text-purple-600 rounded-xl hover:shadow-lg hover:bg-purple-50 transition-all font-semibold"
-          >
-            <Zap className="w-8 h-8" />
-            <span>Brain Training</span>
-          </Link>
-          <Link
             to="/test"
-            className="flex flex-col items-center gap-2 p-6 bg-white border-2 border-orange-500 text-orange-600 rounded-xl hover:shadow-lg hover:bg-orange-50 transition-all font-semibold"
+            className="flex flex-col items-center gap-2 p-4 bg-white border-2 border-gray-200 rounded-xl hover:shadow-lg transition-shadow"
           >
-            <ArrowRight className="w-8 h-8" />
-            <span>Retake Test</span>
+            <ArrowRight className="w-6 h-6 text-cyan-600" />
+            <span className="font-semibold text-gray-900 text-sm">Retake Test</span>
           </Link>
           <Link
             to="/dashboard/patient"
-            className="flex flex-col items-center gap-2 p-6 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-xl hover:shadow-lg hover:from-cyan-600 hover:to-blue-700 transition-all font-semibold"
+            className="flex flex-col items-center gap-2 p-4 bg-cyan-600 text-white rounded-xl hover:bg-cyan-700 transition-colors shadow-lg"
           >
-            <Home className="w-8 h-8" />
-            <span>Dashboard</span>
+            <Home className="w-6 h-6" />
+            <span className="font-semibold text-sm">Dashboard</span>
           </Link>
         </div>
       </div>

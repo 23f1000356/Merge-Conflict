@@ -19,10 +19,11 @@ def calculate_risk(data):
     reaction_time = data.get('reactionTime', 500)
     attention_score = data.get('attentionScore', 50)
     typing_speed = data.get('typingSpeed', 30)
+    voice_score = data.get('voiceScore', 50)
     
     # Simple logic for mock risk assessment
     # Cognitive Index: higher is better
-    cognitive_index = (memory_score * 0.4) + (attention_score * 0.3) + (typing_speed * 0.3)
+    cognitive_index = (memory_score * 0.3) + (attention_score * 0.2) + (typing_speed * 0.2) + (voice_score * 0.3)
     
     # Brain Age: lower is better (baseline ~ actual age)
     # Let's assume average age is 40 for mock
@@ -34,6 +35,8 @@ def calculate_risk(data):
     risk_prob = 100 - cognitive_index
     if reaction_time > 800:
         risk_prob += 10
+    if voice_score < 40:
+        risk_prob += 5
     
     risk_prob = max(0, min(100, risk_prob))
     

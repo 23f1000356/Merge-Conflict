@@ -17,6 +17,9 @@ export const submitTest = async (req, res) => {
             rawData,
         });
 
+        // Extract voice score from voiceMetrics
+        const voiceScore = voiceMetrics?.score || 0;
+
         // 2. Call AI Service for Risk Assessment
         let aiResults = {
             riskProbability: 0,
@@ -31,6 +34,7 @@ export const submitTest = async (req, res) => {
                 reactionTime,
                 attentionScore,
                 typingSpeed,
+                voiceScore,
             });
             aiResults = response.data;
         } catch (error) {
@@ -38,13 +42,19 @@ export const submitTest = async (req, res) => {
             // Fallback or handle error
         }
 
-        // 3. Store Risk Score
+        // 3. Store Risk Score + component snapshot
         const riskScore = await RiskScore.create({
             userId,
             riskProbability: aiResults.riskProbability,
             brainAge: aiResults.brainAge,
             cognitiveIndex: aiResults.cognitiveIndex,
             riskLevel: aiResults.riskLevel,
+            memoryScore,
+            // Convert raw reaction time to a 0–100 score similar to response payload
+            reactionScore: Math.round(100 - (reactionTime / 10)),
+            attentionScore,
+            typingSpeed,
+            voiceScore: Math.round(voiceScore),
         });
 
         // 4. Update User baseline flag if first time
@@ -52,8 +62,15 @@ export const submitTest = async (req, res) => {
 
         res.status(201).json({
             message: 'Test submitted and processed successfully',
-            testResult,
-            riskScore,
+            cognitiveIndex: aiResults.cognitiveIndex,
+            brainAge: aiResults.brainAge,
+            riskProbability: aiResults.riskProbability,
+            riskLevel: aiResults.riskLevel,
+            memoryScore,
+            reactionScore: Math.round(100 - (reactionTime / 10)),
+            attentionScore,
+            voiceScore: Math.round(voiceScore),
+            typingScore: typingSpeed,
         });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });

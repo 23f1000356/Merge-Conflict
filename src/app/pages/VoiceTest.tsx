@@ -1,7 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { ArrowLeft, Mic, Square, Play } from 'lucide-react';
-import { toast } from 'sonner';
+import { ArrowLeft, Brain, CheckCircle, XCircle, RotateCcw, Mic, Square, Play } from 'lucide-react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function VoiceTest() {
   const navigate = useNavigate();

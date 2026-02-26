@@ -202,17 +202,17 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-cyan-600 to-blue-600">
+      <section className="py-20 bg-gradient-to-b from-cyan-50 to-cyan-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">
             Take Control of Your Cognitive Health Today
           </h2>
-          <p className="text-xl text-cyan-100 mb-8">
+          <p className="text-xl text-gray-600 mb-8">
             Join thousands who are proactively monitoring their brain health
           </p>
           <Link
             to="/register"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-cyan-600 font-semibold rounded-xl hover:bg-gray-100 transition-colors shadow-lg"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-600 text-white font-semibold rounded-xl hover:bg-cyan-700 transition-colors shadow-lg"
           >
             Get Started Free <ArrowRight className="w-5 h-5" />
           </Link>
@@ -220,44 +220,44 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12">
+      <footer className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Brain className="w-8 h-8 text-cyan-400" />
+                <Brain className="w-8 h-8 text-white" />
                 <span className="text-xl font-bold text-white">CogniHealth</span>
               </div>
-              <p className="text-sm">
+              <p className="text-sm text-cyan-50">
                 AI-powered cognitive health monitoring for early detection and prevention.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-4">Product</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link to="/" className="hover:text-cyan-400">Features</Link></li>
-                <li><Link to="/" className="hover:text-cyan-400">How It Works</Link></li>
-                <li><Link to="/" className="hover:text-cyan-400">Pricing</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">Features</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">How It Works</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">Pricing</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-4">Company</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link to="/" className="hover:text-cyan-400">About Us</Link></li>
-                <li><Link to="/" className="hover:text-cyan-400">Contact</Link></li>
-                <li><Link to="/" className="hover:text-cyan-400">Careers</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">About Us</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">Contact</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">Careers</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-4">Legal</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link to="/" className="hover:text-cyan-400">Privacy Policy</Link></li>
-                <li><Link to="/" className="hover:text-cyan-400">Terms of Service</Link></li>
-                <li><Link to="/" className="hover:text-cyan-400">HIPAA Compliance</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link to="/" className="text-cyan-50 hover:text-white transition-colors">HIPAA Compliance</Link></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+          <div className="border-t border-cyan-400 border-opacity-30 mt-8 pt-8 text-center text-sm text-cyan-50">
             © 2026 CogniHealth. All rights reserved.
           </div>
         </div>

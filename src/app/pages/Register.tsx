@@ -6,7 +6,7 @@ import { authService } from '../services/api';
 export default function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
     phone: '',
     age: '',
