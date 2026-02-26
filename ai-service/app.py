@@ -8,6 +8,39 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+def moving_average(values):
+    """
+    compute moving average over a list of values.
+    returns a list of the same length where each element is the average
+    """
+    
+    if not isinstance(values, (list, tuple)):
+        return []
+
+    result = []
+    running_sum = 0.0
+    window = []
+    window_size = 3
+
+    for v in values:
+        try:
+            num = float(v)
+        except (TypeError, ValueError):
+            # Skip non-numeric entries
+            result.append(result[-1] if result else 0.0)
+            continue
+
+        window.append(num)
+        running_sum += num
+
+        if len(window) > window_size:
+            running_sum -= window.pop(0)
+
+        result.append(running_sum / len(window))
+
+    return result
+
+
 # Mock model path
 MODEL_PATH = 'risk_model.joblib'
 
@@ -39,13 +72,28 @@ def calculate_risk(data):
         risk_prob += 5
     
     risk_prob = max(0, min(100, risk_prob))
+
+    # Optional moving average over risk history (including current)
+    risk_history = data.get('riskHistory') or []
+    moving_avg_risk = None
+
+    if isinstance(risk_history, (list, tuple)):
+        # Use a fixed window size internally
+        ma_values = moving_average(list(risk_history) + [risk_prob])
+        if ma_values:
+            moving_avg_risk = ma_values[-1]
     
-    return {
+    response = {
         'riskProbability': round(risk_prob, 2),
         'brainAge': round(max(18, brain_age), 1),
         'cognitiveIndex': round(cognitive_index, 2),
         'riskLevel': 'High' if risk_prob > 70 else 'Moderate' if risk_prob > 30 else 'Low'
     }
+
+    if moving_avg_risk is not None:
+        response['movingAverageRiskProbability'] = round(moving_avg_risk, 2)
+
+    return response
 
 @app.route('/predict', methods=['POST'])
 def predict():

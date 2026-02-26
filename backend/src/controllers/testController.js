@@ -28,6 +28,26 @@ export const submitTest = async (req, res) => {
             riskLevel: 'Low'
         };
 
+        // Fetch prior risk probabilities to support AI moving average
+        // (last 10, oldest -> newest)
+        let riskHistory = [];
+        try {
+            const previousRisks = await RiskScore.findAll({
+                where: { userId },
+                order: [['createdAt', 'DESC']],
+                limit: 10,
+                raw: true,
+            });
+            riskHistory = previousRisks
+                .slice()
+                .reverse()
+                .map(r => r.riskProbability)
+                .filter(v => typeof v === 'number' && Number.isFinite(v));
+        } catch (error) {
+            console.error('Risk history fetch error:', error.message);
+            riskHistory = [];
+        }
+
         try {
             const response = await axios.post(`${process.env.AI_SERVICE_URL}/predict`, {
                 memoryScore,
@@ -35,6 +55,7 @@ export const submitTest = async (req, res) => {
                 attentionScore,
                 typingSpeed,
                 voiceScore,
+                riskHistory,
             });
             aiResults = response.data;
         } catch (error) {
