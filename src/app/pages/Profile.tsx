@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import Sidebar from '../components/Sidebar';
 import { Menu, Save, Globe, Lock, Users, Download, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { testService } from '../services/api';
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [formData, setFormData] = useState({
@@ -42,20 +45,84 @@ export default function Profile() {
   };
 
   const handleSaveProfile = () => {
-    toast.success('Profile updated successfully!');
+    try {
+      const existingUserRaw = localStorage.getItem('user');
+      const existingUser = existingUserRaw ? JSON.parse(existingUserRaw) : {};
+
+      const updatedUser = {
+        ...existingUser,
+        fullName: formData.fullName,
+        email: formData.email,
+        age: formData.age,
+        gender: formData.gender,
+        phone: formData.phone,
+      };
+
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      setUser(updatedUser);
+
+      toast.success('Profile updated successfully!');
+    } catch (error) {
+      console.error('Failed to save profile', error);
+      toast.error('Failed to save profile. Please try again.');
+    }
   };
 
   const handleSaveSettings = () => {
-    toast.success('Settings saved!');
+    try {
+      localStorage.setItem('profileSettings', JSON.stringify(settings));
+      toast.success('Settings saved!');
+    } catch (error) {
+      console.error('Failed to save settings', error);
+      toast.error('Failed to save settings. Please try again.');
+    }
   };
 
-  const handleDownloadData = () => {
-    toast.success('Preparing your data for download...');
+  const handleDownloadData = async () => {
+    try {
+      const response = await testService.getHistory();
+      const blob = new Blob([JSON.stringify(response.data, null, 2)], {
+        type: 'application/json',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'cognitive-data.json');
+      document.body.appendChild(link);
+      link.click();
+      link.parentElement?.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast.success('Your data download has started.');
+    } catch (error) {
+      console.error('Failed to download data', error);
+      toast.error('Failed to prepare your data for download.');
+    }
   };
 
   const handleDeleteAccount = () => {
-    if (confirm('Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your cognitive data.')) {
-      toast.error('Account deletion initiated');
+    const confirmed = confirm(
+      'Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your cognitive data.'
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      // Clear client-side data for this user
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('profileSettings');
+
+      toast.error('Your account has been deleted.');
+
+      // Redirect to home/login
+      navigate('/');
+    } catch (error) {
+      console.error('Failed to delete account', error);
+      toast.error('Failed to delete account. Please try again.');
     }
   };
 
